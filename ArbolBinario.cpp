@@ -1,23 +1,21 @@
+#include "ArbolBinario.h"
+#include "Nodo.h"
 
 #include <iostream>
 #include <vector>
 #include <sstream>
 #include <cstdlib>
-#include "ArbolBinario.h"
-#include "persistenciaArbol.h"
 
 using namespace std;
 
-ABB crearNodo(int x)
+
+ABB ArbolBinario::crearNodo(int x)
 {
-    ABB nuevoNodo = new(struct nodo);
-    nuevoNodo->valor = x;
-    nuevoNodo->izq = NULL;
-    nuevoNodo->der = NULL;
+    ABB nuevoNodo;    
+    nuevoNodo = ABB(new Nodo(x));
     return nuevoNodo;
 }
-
-void insertar(ABB& arbol, int x)
+void ArbolBinario::insertar(ABB& arbol, int x)
 {
     if (arbol == NULL)
     {
@@ -28,7 +26,7 @@ void insertar(ABB& arbol, int x)
     else if (x > arbol->valor)
         insertar(arbol->der, x);
 }
-void preOrden(ABB arbol)
+void ArbolBinario::preOrden(ABB arbol)
 {
     if (arbol != NULL)
     {
@@ -37,66 +35,55 @@ void preOrden(ABB arbol)
         preOrden(arbol->der);
     }
 }
-void postOrden(ABB arbol)
-{
-    if (arbol != NULL)
-    {
-        postOrden(arbol->izq);
-        postOrden(arbol->der);
-        cout << arbol->valor << " ";
-    }
-}
-
-
-void ruta(ABB& arbol, std::vector<int>& vPath, int valor)
+void ArbolBinario::path(ABB& arbol, std::vector<int>& vPath, int valor)
 {
     vPath.push_back(arbol->valor);
     if (arbol->valor != valor)
     {
         if (arbol->valor < valor)
         {
-            ruta(arbol->der, vPath, valor);
+            path(arbol->der, vPath, valor);
         }
         else
         {
-            ruta(arbol->izq, vPath, valor);
+            path(arbol->izq, vPath, valor);
         }
     }
 }
 
-int ancestroComun(ABB& arbol, int vlNodeA, int vlNodeB)
+int ArbolBinario::commonAncestor(ABB& arbol, int vlNodeA, int vlNodeB)
 {
-    int vlAncestroComun = 0;
+    int vlCommonAncestor = 0;
     std::vector<int> apath;
     std::vector<int> bpath;
     int sizeSearch;
 
     if (arbol != nullptr)
     {
-        ruta(arbol, apath, vlNodeA);
-        ruta(arbol, bpath, vlNodeB);
+        path(arbol, apath, vlNodeA);
+        path(arbol, bpath, vlNodeB);
     }
 
     if (apath.size() > bpath.size())
     {
-        sizeSearch = bpath.size();
+        sizeSearch = (int)bpath.size();
     }
     else
     {
-        sizeSearch = apath.size();
+        sizeSearch = (int)apath.size();
     }
 
     for (int i = 0; i < sizeSearch; i++)
     {
         if (bpath[i] == apath[i])
         {
-            vlAncestroComun = bpath[i];
+            vlCommonAncestor = bpath[i];
         }
     }
-    return vlAncestroComun;
+    return vlCommonAncestor;
 }
 
-void crearArbolBinario(ABB& arbol, string str)
+void ArbolBinario::crearArbolBinario(ABB& arbol, string str)
 {
 
     std::stringstream in(str);
@@ -107,7 +94,5 @@ void crearArbolBinario(ABB& arbol, string str)
         insertar(arbol, a.back());
         a.pop_back();
     }
-    postOrden(arbol);
-    guardarArbol("lotos", arbol);
-
+    preOrden(arbol);
 }
