@@ -1,5 +1,6 @@
 #include "ArbolBinario.h"
 #include "Nodo.h"
+#include "persistenciaArbol.h"
 
 #include <iostream>
 #include <vector>
@@ -95,4 +96,5 @@ void ArbolBinario::crearArbolBinario(ABB& arbol, string str)
         a.pop_back();
     }
     preOrden(arbol);
+    guardarArbol("LOTO", arbol);
 }

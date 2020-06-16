@@ -141,12 +141,14 @@
   <ItemGroup>
     <ClCompile Include="ArbolBinario.cpp" />
     <ClCompile Include="Nodo.cpp" />
+    <ClCompile Include="persistenciaArbol.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArbolBinario.h" />
     <ClInclude Include="Nodo.h" />
+    <ClInclude Include="persistenciaArbol.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="sqlite3ext.h" />
   </ItemGroup>

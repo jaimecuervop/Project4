@@ -1,6 +1,7 @@
 #include "ArbolBinario.h"
 #include "sqlite3.h"
 #include "persistenciaArbol.h"
+#include <iostream>
 
 
 using namespace std;
@@ -58,6 +59,10 @@ void guardarArbol(string nombre, ABB arbol)
 	/* query cleanup */
 	sqlite3_finalize(query);
 	sqlite3_close_v2(db);
+
+	//TODO
+	cout << endl<< "La secuencia del registro del arbol en la base de datos es " << secArbol << endl;
+
 }
 
 void recuperarArbol(string nombre, ABB arbol)
